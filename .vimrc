@@ -127,9 +127,6 @@ set expandtab
 set ruler
 set lazyredraw
 
-" For messages
-set cmdheight=2
-
 " Use undofile
 " set undodir=~/.vim/undodir
 set undofile
