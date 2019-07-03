@@ -36,3 +36,5 @@ if [ -x "$HOME/.local/bin/exa" ] ; then
 	alias ls='exa'
 	alias l='exa -F'
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
