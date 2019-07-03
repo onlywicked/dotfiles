@@ -38,3 +38,4 @@ if [ -x "$HOME/.local/bin/exa" ] ; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"
