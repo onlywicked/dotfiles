@@ -46,7 +46,8 @@ set noshowmode
 
 "" Language Support
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python', 'rust']
+let g:polyglot_disabled = ['python']
+let g:rustfmt_autosave = 1
 
 " Plug 'Valloric/YouCompleteMe'
 " let g:ycm_autoclose_preview_window_after_completion = 1
@@ -82,8 +83,8 @@ let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 
 " Rust Support
-Plug 'rust-lang/rust.vim' 
-let g:rustfmt_autosave = 1
+"Plug 'rust-lang/rust.vim' 
+"let g:rustfmt_autosave = 1
 
 " Emmet Support
 Plug 'mattn/emmet-vim', " { 'for': ['html', 'css'] }
