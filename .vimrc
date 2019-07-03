@@ -46,7 +46,7 @@ set noshowmode
 
 "" Language Support
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python']
+let g:polyglot_disabled = ['python', 'rust']
 
 " Plug 'Valloric/YouCompleteMe'
 " let g:ycm_autoclose_preview_window_after_completion = 1
@@ -82,7 +82,7 @@ let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 
 " Rust Support
-" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim' 
 let g:rustfmt_autosave = 1
 
 " Emmet Support
@@ -127,6 +127,9 @@ set expandtab
 set ruler
 set lazyredraw
 
+" For messages
+set cmdheight=2
+
 " Use undofile
 " set undodir=~/.vim/undodir
 set undofile
@@ -146,3 +149,13 @@ map <C-s> :w<CR>
 " Tabs
 nnoremap ]t :tabn<CR>
 nnoremap [t :tabp<CR>
+
+"" Coc.nvim Configuration
+"nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tab drop')<cr>
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> K :call CocActionAsync('doHover')<cr>
+
+set updatetime=300
