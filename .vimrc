@@ -54,7 +54,8 @@ let g:rustfmt_autosave = 1
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 
-Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': './install.sh' }
+Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': 'yarn install --frozen-lockfile' }
+let g:coc_force_debug = 1
 " function! s:check_back_space() abort
 " 	let col = col('.') - 1
 " 	return !col || getline('.')[col - 1] =~'\s'
