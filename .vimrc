@@ -68,6 +68,8 @@ let g:coc_force_debug = 1
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" coc-prettier settings to add :Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Golang Support
 Plug 'fatih/vim-go'
