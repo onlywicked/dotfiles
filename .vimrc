@@ -1,8 +1,6 @@
 "" General
 set termguicolors
 set nocompatible
-syntax on
-" filetype off
 
 "" Vim-Plug Configuration
 call plug#begin('~/.vim/plugged')
