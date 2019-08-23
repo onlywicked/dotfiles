@@ -98,7 +98,13 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 
-" filetype plugin indent on
+" Syntax Highlighting
+syntax on
+
+" Enable filetype plugins
+filetype on
+filetype plugin on
+filetype indent on
 
 " Color Scheme 
 " colorscheme codedark
