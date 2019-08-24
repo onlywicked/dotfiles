@@ -44,7 +44,7 @@ set noshowmode
 
 "" Language Support
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python']
+let g:polyglot_disabled = ['python', 'typescript']
 let g:rustfmt_autosave = 1
 
 " Plug 'Valloric/YouCompleteMe'
@@ -68,6 +68,9 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " coc-prettier settings to add :Prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" TypeScript Support
+Plug 'HerringtonDarkholme/yats.vim'
 
 " Golang Support
 Plug 'fatih/vim-go'
