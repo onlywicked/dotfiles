@@ -2,6 +2,8 @@
 set termguicolors
 set nocompatible
 
+
+
 "" Vim-Plug Configuration
 call plug#begin('~/.vim/plugged')
 
@@ -11,11 +13,20 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 map <C-n> :NERDTreeToggle<CR>
 
+" Auto Pair
+" Plug 'jiangmiao/auto-pairs'
+
+" Vim Surround 
+Plug 'tpope/vim-surround'
+
 " CtrlP
 " Plug 'ctrlpvim/ctrlp.vim' 
 " let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlP'
 " let g:ctrlp_custom_ignore = 'node_modules\|git'
+
+" RipGrep Support
+Plug 'jremmen/vim-ripgrep'
 
 " FZF Vim Support
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -43,9 +54,9 @@ set noshowmode
 
 
 "" Language Support
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python', 'typescript']
-let g:rustfmt_autosave = 1
+" Plug 'sheerun/vim-polyglot'
+" let g:polyglot_disabled = ['python', 'typescript']
+" let g:rustfmt_autosave = 1
 
 " Plug 'Valloric/YouCompleteMe'
 " let g:ycm_autoclose_preview_window_after_completion = 1
@@ -66,8 +77,8 @@ let g:coc_force_debug = 1
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" coc-prettier settings to add :Prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" JavaScript Support
+Plug 'pangloss/vim-javascript'
 
 " TypeScript Support
 Plug 'HerringtonDarkholme/yats.vim'
@@ -87,8 +98,8 @@ let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 
 " Rust Support
-"Plug 'rust-lang/rust.vim' 
-"let g:rustfmt_autosave = 1
+" Plug 'rust-lang/rust.vim' 
+" let g:rustfmt_autosave = 1
 
 " Emmet Support
 Plug 'mattn/emmet-vim', " { 'for': ['html', 'css'] }
@@ -96,22 +107,23 @@ let g:user_emmet_mode = 'a'
 
 "" Themes
 " Plug 'tomasiser/vim-code-dark' 
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'cocopon/iceberg.vim'
+Plug 'mhartington/oceanic-next'
 
 call plug#end()
-
 
 " Syntax Highlighting
 syntax on
 
 " Enable filetype plugins
-filetype on
-filetype plugin on
-filetype indent on
+filetype off
+filetype plugin indent on
 
-" Color Scheme 
+"" Color Scheme 
 " colorscheme codedark
-colorscheme dracula
+" colorscheme dracula
+colorscheme OceanicNext
 
 set number " relativenumber
 set linebreak
@@ -165,5 +177,8 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> K :call CocActionAsync('doHover')<cr>
+
+" coc-prettier settings to add :Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 set updatetime=300
