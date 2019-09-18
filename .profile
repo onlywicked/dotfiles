@@ -41,5 +41,5 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 
 if [ -x "$(command -v rg)" ] ; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs'
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
 fi
