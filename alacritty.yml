@@ -136,17 +136,17 @@ font:
     #style: Italic
 
   normal:
-    family: DejaVu Sans Code
-    style: Book
+    family: Fira Code
+    style: Medium
   bold:
-    family: DejaVu Sans Code
+    family: Fira Code
     style: Bold
   italic:
-    family: DejaVu Sans Code
-    style: Oblique
+    family: Fira Code
+    style: Light
 
   # Point size
-  size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -184,6 +184,7 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
+    # background: '0x0c0c0c'
     background: '0x282a36'
     foreground: '0xf8f8f2'
 
