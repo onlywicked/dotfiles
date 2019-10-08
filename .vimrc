@@ -79,6 +79,7 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " JavaScript Support
 Plug 'pangloss/vim-javascript'
+" Plug 'othree/yajs.vim'
 
 " TypeScript Support
 Plug 'HerringtonDarkholme/yats.vim'
@@ -124,8 +125,10 @@ filetype plugin indent on
 " colorscheme codedark
 " colorscheme dracula
 colorscheme OceanicNext
+set guicursor=
 
-set number " relativenumber
+" set number
+set relativenumber
 set linebreak
 set showmatch
 
@@ -182,3 +185,4 @@ nmap <silent> K :call CocActionAsync('doHover')<cr>
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 set updatetime=300
+
