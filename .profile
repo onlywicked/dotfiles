@@ -44,5 +44,11 @@ if [ -x "$(command -v rg)" ] ; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
 fi
 
+# For WSL
+if [ -x "$(command -v docker.exe)" ] ; then
+  alias docker="docker.exe"
+  alias docker-compose="docker-compose.exe"
+fi
+
 alias gs='git status'
 
