@@ -30,7 +30,7 @@ fi
 LS_COLORS=$LS_COLORS:'di=1;34:ow=1;34:';
 export LS_COLORS
 
-if [ -x "$HOME/.local/bin/exa" ] ; then
+if [ -x "$(command -v exa)" ] ; then
 	alias ll='exa -alF'
 	alias la='exa'
 	alias ls='exa'
