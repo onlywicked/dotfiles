@@ -110,8 +110,8 @@ let g:user_emmet_mode = 'a'
 " Plug 'tomasiser/vim-code-dark' 
 " Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'cocopon/iceberg.vim'
-Plug 'mhartington/oceanic-next'
-
+" Plug 'mhartington/oceanic-next'
+Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
 call plug#end()
 
 " Syntax Highlighting
