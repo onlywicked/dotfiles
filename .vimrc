@@ -124,7 +124,7 @@ filetype plugin indent on
 "" Color Scheme 
 " colorscheme codedark
 " colorscheme dracula
-colorscheme OceanicNext
+colorscheme OceanicNextDark
 set guicursor=
 
 " set number
