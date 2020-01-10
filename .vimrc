@@ -128,6 +128,12 @@ filetype plugin indent on
 colorscheme OceanicNextDark
 set guicursor=
 
+set path=** " Set path to current directory
+
+"" netrw settings
+let g:netrw_banner=0 " Disable netrw banner
+let g:netrw_liststyle=3 " Tree style
+
 " set number
 set relativenumber
 set linebreak
