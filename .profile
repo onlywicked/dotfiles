@@ -31,10 +31,10 @@ LS_COLORS=$LS_COLORS:'di=1;34:ow=1;34:';
 export LS_COLORS
 
 if [ -x "$(command -v exa)" ] ; then
-	alias ll='exa -alF'
-	alias la='exa'
-	alias ls='exa'
-	alias l='exa -F'
+	alias ll="exa -alF"
+	alias la="exa"
+	alias ls="exa"
+	alias l="exa -F"
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -52,3 +52,6 @@ fi
 
 alias gs='git status'
 
+export PATH="/usr/local/go/bin:$PATH"
+export GOPATH="/mnt/d/code/go"
+export PATH="$GOPATH/bin:$PATH"
