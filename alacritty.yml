@@ -60,7 +60,7 @@ window:
   #
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
-  startup_mode: Windowed
+  startup_mode: Maximized
 
   # Window title
   #title: Alacritty
@@ -84,7 +84,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  # faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -184,8 +184,8 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    # background: '0x0c0c0c'
-    background: '0x282a36'
+    background: '0x0c0c0c'
+    # background: '0x282a36'
     foreground: '0xf8f8f2'
 
   # Normal colors
