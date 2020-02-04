@@ -53,27 +53,34 @@ set noshowmode
 " 	\ }
 
 
-"" Language Support
-" Plug 'sheerun/vim-polyglot'
-" let g:polyglot_disabled = ['python', 'typescript']
-" let g:rustfmt_autosave = 1
-
 " Plug 'Valloric/YouCompleteMe'
 " let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 
-Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
-let g:coc_force_debug = 1
-" function! s:check_back_space() abort
-" 	let col = col('.') - 1
-" 	return !col || getline('.')[col - 1] =~'\s'
-" endfunction
-" 
+ Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+ let g:coc_force_debug = 1
+ function! s:check_back_space() abort
+ 	let col = col('.') - 1
+ 	return !col || getline('.')[col - 1] =~'\s'
+ endfunction
+ 
 " inoremap <silent><expr> <TAB>
 " 	\ pumvisible() ? "\<C-n>" :
 " 	\ <SID>check_back_space() ? "\<TAB>" :
 " 	\ coc#refresh()
+
+
+"" Deoplete
+" if has('nvim')
+" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+" 	Plug 'Shougo/deoplete.nvim'
+" 	Plug 'roxma/nvim-yarp'
+" 	Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
+
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
@@ -86,18 +93,27 @@ Plug 'HerringtonDarkholme/yats.vim'
 
 " Golang Support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-let g:go_highlight_build_constraints = 1
+
+"" vim-go coc.nvim settings
+"" disable settings conflicting with coc-go
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+let g:go_gopls_enabled = 0
+let g:go_code_completion_enabled = 0
+
+"" vim-go highlight settings
+" let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_operators = 0
 let g:go_highlight_types = 1
 let g:go_highlight_function_calls = 1
-let g:go_auto_sameids = 0
+" let g:go_auto_sameids = 0
+
+"" vim-go other settings
 let g:go_fmt_command = "goimports"
-let g:go_doc_popup_window = 1
 
 " Rust Support
 " Plug 'rust-lang/rust.vim' 
@@ -106,6 +122,13 @@ let g:go_doc_popup_window = 1
 " Emmet Support
 Plug 'mattn/emmet-vim', " { 'for': ['html', 'css'] }
 let g:user_emmet_mode = 'a'
+
+
+"" Language Support
+Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['python']
+" let g:rustfmt_autosave = 1
+
 
 "" Themes
 " Plug 'tomasiser/vim-code-dark' 
@@ -128,7 +151,7 @@ filetype plugin indent on
 colorscheme OceanicNextDark
 set guicursor=
 
-set path=** " Set path to current directory
+set path+=** " Set path to current directory
 
 "" netrw settings
 let g:netrw_banner=0 " Disable netrw banner
@@ -163,6 +186,7 @@ set lazyredraw
 " Use undofile
 " set undodir=~/.vim/undodir
 set undofile
+" set noswapfile
 
 
 " show a visual line under the cursor's current line
