@@ -2,6 +2,11 @@
 set termguicolors
 set nocompatible
 
+"" Allow to switch buffer without saving
+set hidden
+
+"" Mapping leader to space
+let mapleader = ' '
 
 
 "" Vim-Plug Configuration
@@ -38,6 +43,9 @@ Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" Vim Multiple Cursor
+" Plug 'terryma/vim-multiple-cursors'
+
 " Lightline
 Plug 'itchyny/lightline.vim'
 set noshowmode
@@ -65,6 +73,26 @@ set noshowmode
  	return !col || getline('.')[col - 1] =~'\s'
  endfunction
  
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Mapping <Leader>{j,k} for error jumping
+nmap <silent> <Leader>j <Plug>(coc-diagnostic-next-error)
+nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
+
+
 " inoremap <silent><expr> <TAB>
 " 	\ pumvisible() ? "\<C-n>" :
 " 	\ <SID>check_back_space() ? "\<TAB>" :
@@ -135,7 +163,8 @@ let g:polyglot_disabled = ['python']
 " Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'cocopon/iceberg.vim'
 " Plug 'mhartington/oceanic-next'
-Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
+Plug 'morhetz/gruvbox'
+" Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
 call plug#end()
 
 " Syntax Highlighting
@@ -148,9 +177,11 @@ filetype plugin indent on
 "" Color Scheme 
 " colorscheme codedark
 " colorscheme dracula
-colorscheme OceanicNextDark
+" colorscheme OceanicNextDark
+colorscheme gruvbox
 set guicursor=
 
+set wildmenu
 set path+=** " Set path to current directory
 
 "" netrw settings
@@ -158,13 +189,15 @@ let g:netrw_banner=0 " Disable netrw banner
 let g:netrw_liststyle=3 " Tree style
 
 " set number
+" set number 
 set relativenumber
 set linebreak
 set showmatch
+set nowrap
 
 set smartcase
 set ignorecase
-set hlsearch
+" set hlsearch
 set incsearch
 
 set autoindent
@@ -184,7 +217,7 @@ set ruler
 set lazyredraw
 
 " Use undofile
-" set undodir=~/.vim/undodir
+set undodir=~/.vim/undodir
 set undofile
 " set noswapfile
 
@@ -192,13 +225,13 @@ set undofile
 " show a visual line under the cursor's current line
 set cursorline
 
+" show a vertical line under the cursor's current line
+set cursorcolumn
+
 " enable all Python syntax highlighting features
 let python_highlight_all=1
 
 "" Key Mapping
-" For Saving
-map <C-s> :w<CR>
-
 
 " Tabs
 nnoremap ]t :tabn<CR>
@@ -217,3 +250,4 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 set updatetime=300
 
+set mouse=a
