@@ -3,14 +3,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: xterm-256color
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -33,9 +33,9 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  padding:
-    x: 2
-    y: 2
+  #padding:
+    # x: 8
+    # y: 8
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -68,14 +68,14 @@ window:
   # Window class (Linux only):
   #class: Alacritty
 
-scrolling:
+# scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
-  history: 10000
+  # history: 10000
 
   # Number of lines the viewport will move for every line scrolled when
   # scrollback is enabled (history > 0).
-  multiplier: 3
+  # multiplier: 3
 
   # Faux Scrolling
   #
@@ -87,7 +87,7 @@ scrolling:
   # faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
-  auto_scroll: false
+  # auto_scroll: false
 
 # Spaces per Tab (changes require restart)
 #
@@ -96,7 +96,7 @@ scrolling:
 # Some applications, like Emacs, rely on knowing about the width of a tab.
 # To prevent unexpected behavior in these applications, it's also required to
 # change the `it` value in terminfo when altering this setting.
-tabspaces: 2
+# tabspaces: 2
 
 # Font configuration (changes require restart)
 font:
@@ -136,14 +136,14 @@ font:
     #style: Italic
 
   normal:
-    family: Fira Code
-    style: Medium
+    family: Hack
+    style: Regular
   bold:
-    family: Fira Code
+    family: Hack
     style: Bold
   italic:
-    family: Fira Code
-    style: Light
+    family: Hack
+    style: Italic
 
   # Point size
   size: 10.0
@@ -175,10 +175,41 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  #use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
+
+# Colors (Gruvbox dark)
+# colors:
+#   # Default colors
+#   primary:
+#     # hard contrast: background = '#1d2021'
+#     background: '#0c0c0c'
+#     # soft contrast: background = '#32302f'
+#     foreground: '#ebdbb2'
+
+#   # Normal colors
+#   normal:
+#     black:   '#282828'
+#     red:     '#cc241d'
+#     green:   '#98971a'
+#     yellow:  '#d79921'
+#     blue:    '#458588'
+#     magenta: '#b16286'
+#     cyan:    '#689d6a'
+#     white:   '#a89984'
+
+#   # Bright colors
+#   bright:
+#     black:   '#928374'
+#     red:     '#fb4934'
+#     green:   '#b8bb26'
+#     yellow:  '#fabd2f'
+#     blue:    '#83a598'
+#     magenta: '#d3869b'
+#     cyan:    '#8ec07c'
+#     white:   '#ebdbb2'
 
 # Colors (Dracula)
 colors:
@@ -375,7 +406,7 @@ working_directory: None
 #
 # Alacritty will fall back to the WinPTY automatically if the ConPTY
 # backend cannot be initialized.
-enable_experimental_conpty_backend: true
+#enable_experimental_conpty_backend: true
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
