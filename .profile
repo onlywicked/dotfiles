@@ -30,28 +30,23 @@ fi
 LS_COLORS=$LS_COLORS:'di=1;34:ow=1;34:';
 export LS_COLORS
 
-if [ -x "$(command -v exa)" ] ; then
-	alias ll="exa -alF"
-	alias la="exa"
-	alias ls="exa"
-	alias l="exa -F"
-fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
+
+export PATH="/usr/local/go/bin:$PATH"
+export GOPATH="$HOME/code/go"
+export PATH="$GOPATH/bin:$PATH"
+
+## Add lfcd support
+if [ -x "$(command -v lf)" ] ; then
+	LFPATH="$GOPATH/src/github.com/gokcehan/lf"
+	if [ -f "$LFPATH/etc/lfcd.sh" ] ; then
+		. "$LFPATH/etc/lfcd.sh"
+	fi
+fi
 
 if [ -x "$(command -v rg)" ] ; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
 fi
 
-# For WSL
-if [ -x "$(command -v docker.exe)" ] ; then
-  alias docker="docker.exe"
-  alias docker-compose="docker-compose.exe"
-fi
-
-alias gs='git status'
-
-export PATH="/usr/local/go/bin:$PATH"
-export GOPATH="/mnt/d/code/go"
-export PATH="$GOPATH/bin:$PATH"
