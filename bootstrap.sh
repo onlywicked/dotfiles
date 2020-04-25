@@ -105,6 +105,13 @@ if [ -d "${DOT_FILES}" ]; then
 	popd
 fi
 
+if ! [ "$(command -v nix-env)" ]; then
+	echo "=> Installing nix package manager"
+	curl -sSL -o nix-install https://nixos.org/nix/install
+	sh ./nix-install
+	rm -rf ./nix-install
+fi
+
 NVIM=$(which nvim)
 if [ "$(command -v nvim)" ]; then
 	echo "==> seting neovim as default editor"
