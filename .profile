@@ -50,3 +50,4 @@ if [ -x "$(command -v rg)" ] ; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
 fi
 
+if [ -e /home/arman/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arman/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
