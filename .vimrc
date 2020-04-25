@@ -66,12 +66,12 @@ set noshowmode
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 
- Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
- let g:coc_force_debug = 1
- function! s:check_back_space() abort
- 	let col = col('.') - 1
- 	return !col || getline('.')[col - 1] =~'\s'
- endfunction
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" let g:coc_force_debug = 1
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~'\s'
+endfunction
  
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
