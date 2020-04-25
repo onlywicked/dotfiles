@@ -17,7 +17,6 @@ if [ "${UPGRADE_PACKAGES}" != "none" ]; then
 	# add third party repositories
 	sudo add-apt-repository ppa:apt-fast/stable -y
 
-
 	sudo apt-get update
 	sudo apt-get upgrade -y
 fi
@@ -57,6 +56,15 @@ sudo apt-fast install -qq -y \
 	unzip \
 	wget \
 	zip
+
+
+if ! [ "$(command -v n)" ]; then
+	echo "==> Installing n"
+	curl -sSL -o n-install https://git.io/n-install
+	chmod +x n-install
+	./n-install -y
+	rm -rf n-install
+fi
 
 if ! [ "$(command -v gvm)" ]; then
 	echo "==> Installing gvm"
@@ -115,5 +123,8 @@ if [ ! -f "${VIM_PLUG}" ] ; then
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-
+if ! [ "$(command -v lf)" ]; then
+	echo "==> Intalling lf"
+	go get -u github.com/gokcehan/lf
+fi
 
