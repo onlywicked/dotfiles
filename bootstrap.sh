@@ -135,3 +135,10 @@ if ! [ "$(command -v lf)" ]; then
 	go get -u github.com/gokcehan/lf
 fi
 
+if ! [ "$(command -v exa)" ]; then
+	echo "===> Installing exa"
+	nix-env -i exa
+fi
+
+echo ""
+echo "================ Done =================="
