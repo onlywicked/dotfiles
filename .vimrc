@@ -155,7 +155,7 @@ let g:user_emmet_mode = 'a'
 "" Language Support
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['python']
-" let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 1
 
 
 "" Themes
