@@ -47,7 +47,6 @@ sudo apt-fast install -qq -y \
 	p7zip-full \
 	p7zip-rar \
 	pkg-config \
-	ripgrep \
 	software-properties-common \
 	sqlite3 \
 	tig \
@@ -101,6 +100,7 @@ if [ -d "${DOT_FILES}" ]; then
 	# symlink vimrc for neovim
 	mkdir -p ~/.config/nvim
 	ln -sfn $(pwd)/.vimrc ~/.config/nvim/init.vim
+	ln -sfn $(pwd)/coc-settings.json ~/.config/nvim/coc-settings.json
 
 	popd
 fi
