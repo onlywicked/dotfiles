@@ -26,14 +26,14 @@ if [ -x "$(command -v docker.exe)" ] ; then
 fi
 
 # X410 Server
-if [ -x "$(command -v x410.exe)" ] ; then
-	export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-fi
-
+# if [ -x "$(command -v x410.exe)" ] ; then
+# 	export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+# fi
+# 
 # wslview to open windows registered file handler
 ## e.g. 
 ## "open https://www.google.com opens" the url in default windows browser
-if [ -x "$(command -v wslview)" ]; then
-	alias open=wslview
-fi
+# if [ -x "$(command -v wslview)" ]; then
+# 	alias open=wslview
+# fi
 
