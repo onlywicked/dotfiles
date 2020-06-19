@@ -86,7 +86,7 @@ let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Mapping <Leader>{j,k} for error jumping
 nmap <silent> <Leader>j <Plug>(coc-diagnostic-next-error)
@@ -233,13 +233,9 @@ let python_highlight_all=1
 
 "" Key Mapping
 
-" Tabs
-nnoremap ]t :tabn<CR>
-nnoremap [t :tabp<CR>
-
 "" Coc.nvim Configuration
-"nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tab drop')<cr>
+nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tab drop')<cr>
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)

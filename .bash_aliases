@@ -20,10 +20,10 @@ alias gs='git status'
 
 ## For WSL
 # docker
-if [ -x "$(command -v docker.exe)" ] ; then
-  alias docker="docker.exe"
-  alias docker-compose="docker-compose.exe"
-fi
+# if [ -x "$(command -v docker.exe)" ] ; then
+#   alias docker="docker.exe"
+#   alias docker-compose="docker-compose.exe"
+# fi
 
 # X410 Server
 # if [ -x "$(command -v x410.exe)" ] ; then
