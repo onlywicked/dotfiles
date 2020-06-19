@@ -84,6 +84,7 @@ if ! [ "$(command -v go)" ]; then
 	GOVERSION="1.14.2"
 	echo "===> Installing go${GOVERSION}"
 	gvm install go${GOVERSION} -B
+	gvm use go${GOVERSION} --default
 fi
 
 DOT_FILES="${HOME}/dotfiles"
