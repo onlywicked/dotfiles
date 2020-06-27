@@ -67,6 +67,15 @@ set noshowmode
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+let g:coc_global_extensions = [
+			\ 'coc-snippets',
+			\ 'coc-pairs',
+			\	'coc-json',
+			\ 'coc-css',
+			\ 'coc-html',
+			\ 'coc-tsserver',
+			\ ]
+
 " let g:coc_force_debug = 1
 function! s:check_back_space() abort
 	let col = col('.') - 1
@@ -226,7 +235,7 @@ set undofile
 set cursorline
 
 " show a vertical line under the cursor's current line
-set cursorcolumn
+" set cursorcolumn
 
 " enable all Python syntax highlighting features
 let python_highlight_all=1
