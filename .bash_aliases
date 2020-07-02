@@ -16,6 +16,7 @@ alias rm="rm -i"
 
 # git aliases
 alias gs='git status'
+alias gl='git log --all --decorate --oneline --graph'
 
 
 ## For WSL
