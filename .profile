@@ -46,6 +46,12 @@ if [ -x "$(command -v lf)" ] ; then
 	fi
 fi
 
+## NPM Config
+if [ -x "$(command -v npm)" ] ; then
+	export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+	export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
+fi
+
 if [ -x "$(command -v rg)" ] ; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
 fi
