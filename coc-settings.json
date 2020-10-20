@@ -1,5 +1,23 @@
 {
-	"go.goplsOptions": {
-		"completeUnimported": true
-	}
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "json",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "go.goplsPath": "/home/arman/code/go/bin/gopls",
+  "go.goplsOptions": {
+    "completeUnimported": true
+  },
+  "html.format.wrapLineLength": 0,
+  "html.format.indentHandlebars": false,
+  "prettier.arrowParens": "always",
+  "prettier.trailingComma": "es5",
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["typescript"]
+  }
 }
+
