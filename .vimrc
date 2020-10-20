@@ -8,6 +8,9 @@ set hidden
 "" Mapping leader to space
 let mapleader = ' '
 
+"" Clipboard
+" set clipboard=unamedplus
+
 
 "" Vim-Plug Configuration
 call plug#begin('~/.vim/plugged')
@@ -69,11 +72,11 @@ set noshowmode
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 let g:coc_global_extensions = [
 			\ 'coc-snippets',
-			\ 'coc-pairs',
 			\	'coc-json',
 			\ 'coc-css',
 			\ 'coc-html',
 			\ 'coc-tsserver',
+			\ 'coc-prettier',
 			\ ]
 
 " let g:coc_force_debug = 1
@@ -95,7 +98,7 @@ let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
-" imap <C-j> <Plug>(coc-snippets-expand-jump)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Mapping <Leader>{j,k} for error jumping
 nmap <silent> <Leader>j <Plug>(coc-diagnostic-next-error)
@@ -120,6 +123,13 @@ nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Vim Commentary
+Plug 'tpope/vim-commentary'
+
+" Vim Snippets
+Plug 'honza/vim-snippets'
+
 
 " JavaScript Support
 Plug 'pangloss/vim-javascript'
@@ -147,6 +157,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 0
 let g:go_highlight_types = 1
 let g:go_highlight_function_calls = 1
+" let g:go_doc_window_popup_window = 1
 " let g:go_auto_sameids = 0
 
 "" vim-go other settings
@@ -199,7 +210,7 @@ let g:netrw_liststyle=3 " Tree style
 
 " set number
 " set number 
-set relativenumber
+set number relativenumber
 set linebreak
 set showmatch
 set nowrap
@@ -249,6 +260,8 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> K :call CocActionAsync('doHover')<cr>
+
+nmap <leader>rn <Plug>(coc-rename)
 
 " coc-prettier settings to add :Prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
