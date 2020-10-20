@@ -18,6 +18,9 @@ alias rm="rm -i"
 alias gs='git status'
 alias gl='git log --all --decorate --oneline --graph'
 
+# fd
+alias fd='fdfind'
+
 
 ## For WSL
 # docker
