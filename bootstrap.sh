@@ -39,6 +39,7 @@ sudo apt-fast install -qq -y \
 	clang \
 	cmake \
 	curl \
+	fd-find \
 	git \
 	htop \
 	make \
@@ -62,6 +63,7 @@ if ! [ "$(command -v n)" ]; then
 	curl -sSL -o n-install https://git.io/n-install
 	chmod +x n-install
 	./n-install -y
+	mkdir -p ~/.npm-global
 	rm -rf n-install
 fi
 
