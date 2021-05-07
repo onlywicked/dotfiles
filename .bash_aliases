@@ -22,6 +22,10 @@ alias gl='git log --all --decorate --oneline --graph'
 alias fd='fdfind'
 
 
+# onedrive
+alias backup-keys="onedrive --synchronize --upload-only --no-remote-delete --single-directory 'ssh'"
+alias download-keys="onedrive --synchronize --download-only --no-remote-delete --single-directory 'ssh'"
+
 ## For WSL
 # docker
 # if [ -x "$(command -v docker.exe)" ] ; then

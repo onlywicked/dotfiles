@@ -31,7 +31,6 @@ LS_COLORS=$LS_COLORS:'di=1;34:ow=1;34:';
 export LS_COLORS
 
 
-export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 
 export PATH="/usr/local/go/bin:$PATH"
@@ -53,6 +52,11 @@ if [ -x "$(command -v npm)" ] ; then
 fi
 
 if [ -x "$(command -v rg)" ] ; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs -g !.git/*'
+  export FZF_DEFAULT_COMMAND='rg --files --hidden -g !.git/* -g !node_modules/*'
 fi
 
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+if [ -e /home/arman/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arman/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

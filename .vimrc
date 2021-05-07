@@ -1,6 +1,7 @@
 "" General
 set termguicolors
 set nocompatible
+filetype off
 
 "" Allow to switch buffer without saving
 set hidden
@@ -39,7 +40,7 @@ Plug 'jremmen/vim-ripgrep'
 " FZF Vim Support
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :Files<CR>
 
 " Vim Easy Align
 Plug 'junegunn/vim-easy-align'
@@ -177,32 +178,41 @@ Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['python']
 let g:rustfmt_autosave = 1
 
+"" Firestore support
+Plug 'delphinus/vim-firestore'
+
 
 "" Themes
 " Plug 'tomasiser/vim-code-dark' 
-" Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'cocopon/iceberg.vim'
 " Plug 'mhartington/oceanic-next'
 Plug 'morhetz/gruvbox'
 " Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
+
 call plug#end()
 
 " Syntax Highlighting
-syntax on
+syntax enable
 
 " Enable filetype plugins
-filetype off
 filetype plugin indent on
 
 "" Color Scheme 
 " colorscheme codedark
-" colorscheme dracula
+colorscheme dracula
 " colorscheme OceanicNextDark
-colorscheme gruvbox
+" colorscheme gruvbox
 set guicursor=
 
+set wildignorecase
 set wildmenu
-set path+=** " Set path to current directory
+" ignore these directories from find
+set wildignore+=**/node_modules/**,**/dist/**,**/tmp/**,**/target/**
+
+" Set path to current directory and current buffer
+set path=.,**
+
 
 "" netrw settings
 let g:netrw_banner=0 " Disable netrw banner
@@ -217,7 +227,7 @@ set nowrap
 
 set smartcase
 set ignorecase
-" set hlsearch
+set hlsearch
 set incsearch
 
 set autoindent
@@ -237,10 +247,12 @@ set ruler
 set lazyredraw
 
 " Use undofile
-set undodir=~/.vim/undodir
 set undofile
-" set noswapfile
+set undodir=~/.vim/undodir
+set noswapfile
 
+" show column marker
+" set colorcolumn=80
 
 " show a visual line under the cursor's current line
 set cursorline
@@ -266,6 +278,13 @@ nmap <leader>rn <Plug>(coc-rename)
 " coc-prettier settings to add :Prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+" coc-eslint
+command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
+
 set updatetime=300
 
 set mouse=a
+
+
+"" Custom variables
+let $MYVIMRC = '~/.vimrc'

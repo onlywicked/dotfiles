@@ -80,14 +80,14 @@ if ! [ "$(command -v gvm)" ]; then
 	rm -f ./gvm-installer
 fi
 
-if ! [ "$(command -v go)" ]; then
-	source  ~/.gvm/scripts/gvm
-
-	GOVERSION="1.14.2"
-	echo "===> Installing go${GOVERSION}"
-	gvm install go${GOVERSION} -B
-	gvm use go${GOVERSION} --default
-fi
+# if ! [ "$(command -v go)" ]; then
+#	source  ~/.gvm/scripts/gvm
+#
+#	GOVERSION="1.14.2"
+#	echo "===> Installing go${GOVERSION}"
+#	gvm install go${GOVERSION} -B
+#	gvm use go${GOVERSION} --default
+# fi
 
 DOT_FILES="${HOME}/dotfiles"
 if [ -d "${DOT_FILES}" ]; then
@@ -133,15 +133,15 @@ if [ ! -f "${VIM_PLUG}" ] ; then
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-if ! [ "$(command -v lf)" ]; then
-	echo "==> Intalling lf"
-	go get -u github.com/gokcehan/lf
-fi
+# if ! [ "$(command -v lf)" ]; then
+# 	echo "==> Intalling lf"
+# 	go get -u github.com/gokcehan/lf
+# fi
 
-if ! [ "$(command -v exa)" ]; then
-	echo "===> Installing exa"
-	nix-env -i exa
-fi
+# if ! [ "$(command -v exa)" ]; then
+# 	echo "===> Installing exa"
+# 	nix-env -i exa
+# fi
 
 echo ""
 echo "================ Done =================="

@@ -6,10 +6,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "go.goplsPath": "/home/arman/code/go/bin/gopls",
-  "go.goplsOptions": {
-    "completeUnimported": true
-  },
   "html.format.wrapLineLength": 0,
   "html.format.indentHandlebars": false,
   "prettier.arrowParens": "always",
@@ -18,6 +14,6 @@
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescriptreact": ["typescript"]
-  }
+  },
+  "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"]
 }
-
