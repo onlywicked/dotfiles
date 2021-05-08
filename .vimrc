@@ -1,10 +1,12 @@
-"" General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" General
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 set nocompatible
 filetype off
 
-"" Allow to switch buffer without saving
-set hidden
 
 "" Mapping leader to space
 let mapleader = ' '
@@ -13,14 +15,22 @@ let mapleader = ' '
 " set clipboard=unamedplus
 
 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Plugins
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "" Vim-Plug Configuration
 call plug#begin('~/.vim/plugged')
 
 "" Utilities
 
 " NerdTree
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-map <C-n> :NERDTreeToggle<CR>
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" map <C-n> :NERDTreeToggle<CR>
 
 " Auto Pair
 " Plug 'jiangmiao/auto-pairs'
@@ -28,13 +38,7 @@ map <C-n> :NERDTreeToggle<CR>
 " Vim Surround 
 Plug 'tpope/vim-surround'
 
-" CtrlP
-" Plug 'ctrlpvim/ctrlp.vim' 
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" let g:ctrlp_custom_ignore = 'node_modules\|git'
-
-" RipGrep Support
+" RipGrep
 Plug 'jremmen/vim-ripgrep'
 
 " FZF Vim Support
@@ -65,11 +69,7 @@ set noshowmode
 " 	\ }
 
 
-" Plug 'Valloric/YouCompleteMe'
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 1
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
-
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 let g:coc_global_extensions = [
 			\ 'coc-snippets',
@@ -101,26 +101,45 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 " Mapping <Leader>{j,k} for error jumping
 nmap <silent> <Leader>j <Plug>(coc-diagnostic-next-error)
 nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
+" nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tab drop')<cr>
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
 
+" Use K to show documentation in preview window.
+" nmap <silent> K :call CocActionAsync('doHover')<cr>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+nmap <leader>rn <Plug>(coc-rename)
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " inoremap <silent><expr> <TAB>
 " 	\ pumvisible() ? "\<C-n>" :
 " 	\ <SID>check_back_space() ? "\<TAB>" :
 " 	\ coc#refresh()
-
-
-"" Deoplete
-" if has('nvim')
-" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-" 	Plug 'Shougo/deoplete.nvim'
-" 	Plug 'roxma/nvim-yarp'
-" 	Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-" let g:deoplete#enable_at_startup = 1
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -192,21 +211,55 @@ Plug 'morhetz/gruvbox'
 
 call plug#end()
 
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Syntax Highlighting, Numbers, Linebreaks
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Syntax Highlighting
 syntax enable
-
 " Enable filetype plugins
 filetype plugin indent on
 
-"" Color Scheme 
+set number relativenumber
+set linebreak
+set showmatch
+set nowrap
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Color Scheme 
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " colorscheme codedark
 colorscheme dracula
-" colorscheme OceanicNextDark
 " colorscheme gruvbox
+" colorscheme OceanicNextDark
 set guicursor=
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Buffer, Args
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Allow to switch buffer without saving
+set hidden
 
 set wildignorecase
 set wildmenu
+
 " ignore these directories from find
 set wildignore+=**/node_modules/**,**/dist/**,**/tmp/**,**/target/**
 
@@ -214,22 +267,45 @@ set wildignore+=**/node_modules/**,**/dist/**,**/tmp/**,**/target/**
 set path=.,**
 
 
-"" netrw settings
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Netrw Configuration
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 let g:netrw_banner=0 " Disable netrw banner
 let g:netrw_liststyle=3 " Tree style
 
-" set number
-" set number 
-set number relativenumber
-set linebreak
-set showmatch
-set nowrap
+
+
+
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Search Configuration
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set smartcase
 set ignorecase
 set hlsearch
 set incsearch
 
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Indentation Configuration
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent
 set smartindent
 set cinoptions=l1
@@ -241,10 +317,22 @@ set tabstop=2
 set noexpandtab
 
 
-"" Advanced
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Additional Configuration
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " set splitbelow
 set ruler
+
 set lazyredraw
+set updatetime=300
+
+" Enable mouse support
+set mouse=a
 
 " Use undofile
 set undofile
@@ -263,28 +351,47 @@ set cursorline
 " enable all Python syntax highlighting features
 let python_highlight_all=1
 
-"" Key Mapping
 
-"" Coc.nvim Configuration
-nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tab drop')<cr>
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> K :call CocActionAsync('doHover')<cr>
 
-nmap <leader>rn <Plug>(coc-rename)
 
-" coc-prettier settings to add :Prettier
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Key Mapping
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Command Mapping
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Add `:Prettier` command to run prettier on current file
+" Note: Requires `coc-prettier`
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-" coc-eslint
+" Add `:Eslint` command to execute eslint autofix on current file
+" Note: Requires `coc-eslint`
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
 
-set updatetime=300
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 
-set mouse=a
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:Ogranize` command for organize imports of the current buffer.
+command! -nargs=0 Organize :call CocAction('runCommand', 'editor.action.organizeImport')
 
 
-"" Custom variables
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Custom Variables
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let $MYVIMRC = '~/.vimrc'
