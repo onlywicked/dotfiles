@@ -113,7 +113,7 @@ nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gI <Plug>(coc-implementation)
 
 " Use K to show documentation in preview window.
 " nmap <silent> K :call CocActionAsync('doHover')<cr>
@@ -167,6 +167,7 @@ let g:go_def_mapping_enabled = 0
 let g:go_doc_keywordprg_enabled = 0
 let g:go_gopls_enabled = 0
 let g:go_code_completion_enabled = 0
+let g:go_fmt_autosave = 0
 
 "" vim-go highlight settings
 " let g:go_highlight_build_constraints = 1
@@ -174,14 +175,15 @@ let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-let g:go_highlight_operators = 0
+let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_highlight_function_calls = 1
+let g:go_metalinter_command = 'golangci-lint'
 " let g:go_doc_window_popup_window = 1
 " let g:go_auto_sameids = 0
 
 "" vim-go other settings
-let g:go_fmt_command = "goimports"
+" let g:go_fmt_command = 'goimports'
 
 " Rust Support
 " Plug 'rust-lang/rust.vim' 
@@ -207,7 +209,11 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'cocopon/iceberg.vim'
 " Plug 'mhartington/oceanic-next'
 Plug 'morhetz/gruvbox'
+Plug 'wojciechkepka/vim-github-dark'
 " Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
+"
+
+Plug 'nicwest/vim-http'
 
 call plug#end()
 
@@ -240,9 +246,10 @@ set nowrap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " colorscheme codedark
-colorscheme dracula
-" colorscheme gruvbox
+" colorscheme dracula
+colorscheme gruvbox
 " colorscheme OceanicNextDark
+" colorscheme ghdark
 set guicursor=
 
 
@@ -278,7 +285,7 @@ set path=.,**
 
 let g:netrw_banner=0 " Disable netrw banner
 let g:netrw_liststyle=3 " Tree style
-
+let g:netrw_localrmdir='rm -r'
 
 
 
@@ -340,7 +347,8 @@ set undodir=~/.vim/undodir
 set noswapfile
 
 " show column marker
-" set colorcolumn=80
+set colorcolumn=80
+" highlight ColorColumn ctermbg=238 guibg=#424450
 
 " show a visual line under the cursor's current line
 set cursorline
@@ -360,6 +368,14 @@ let python_highlight_all=1
 " Key Mapping
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Moving multiple lines and preserving indentation
+" Respectfully, *cough* *cough* copied from Ryan Florence
+" https://gist.github.com/ryanflorence/6d92b7495873263aec0b4e3c299b3bd3
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 
 
