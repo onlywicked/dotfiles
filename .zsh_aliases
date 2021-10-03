@@ -1,0 +1,16 @@
+## For better colors
+if [ -x "$(command -v exa)" ] ; then
+	alias ll="exa -alFg"
+	alias la="exa"
+	alias ls="exa"
+	alias l="exa -F"
+fi
+
+## Prompt before overwriting files
+alias mv="mv -i"
+alias rm="rm -i"
+
+## git aliases
+alias gs='git status'
+alias gl='git log --all --decorate --oneline --graph'
+
