@@ -9,7 +9,7 @@ filetype off
 
 
 "" Mapping leader to space
-let mapleader = ' '
+let mapleader = "\<space>"
 
 "" Clipboard
 " set clipboard=unamedplus
@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 
 " RipGrep
 Plug 'jremmen/vim-ripgrep'
+nnoremap <Leader>rg :Rg 
 
 " FZF Vim Support
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -57,27 +58,20 @@ nmap ga <Plug>(EasyAlign)
 " Lightline
 Plug 'itchyny/lightline.vim'
 set noshowmode
-" let g:lightline = {
-" 	\ 'colorscheme': 'wombat',
-" 	\ 'active': {
-" 	\   'left': [ [ 'mode', 'paste' ],
-" 	\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-" 	\ },
-" 	\ 'component_function': {
-" 	\   'cocstatus': 'coc#status'
-" 	\ },
-" 	\ }
 
 
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'antoinemadec/coc-fzf'
 let g:coc_global_extensions = [
-			\ 'coc-snippets',
-			\	'coc-json',
-			\ 'coc-css',
-			\ 'coc-html',
 			\ 'coc-tsserver',
+			\ 'coc-snippets',
 			\ 'coc-prettier',
+			\ 'coc-marketplace',
+			\	'coc-json',
+			\ 'coc-html',
+			\ 'coc-css',
+			\ 'coc-go',
 			\ ]
 
 " let g:coc_force_debug = 1
@@ -204,12 +198,16 @@ Plug 'delphinus/vim-firestore'
 
 
 "" Themes
-" Plug 'tomasiser/vim-code-dark' 
+Plug 'tomasiser/vim-code-dark' 
+Plug 'sainnhe/gruvbox-material'
+Plug 'joshdick/onedark.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'mhartington/oceanic-next'
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'cocopon/iceberg.vim'
-" Plug 'mhartington/oceanic-next'
 Plug 'morhetz/gruvbox'
 Plug 'wojciechkepka/vim-github-dark'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
 "
 
@@ -247,9 +245,23 @@ set nowrap
 
 " colorscheme codedark
 " colorscheme dracula
-colorscheme gruvbox
-" colorscheme OceanicNextDark
+" colorscheme gruvbox
+" colorscheme OceanicNext
+" colorscheme gruvbox-material
 " colorscheme ghdark
+colorscheme ayu
+
+" colorscheme onehalfdark
+" let g:lightline = {
+" 	\ 'colorscheme': 'onehalfdark',
+" 	\ 'active': {
+" 	\   'left': [ [ 'mode', 'paste' ],
+" 	\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+" 	\ },
+" 	\ 'component_function': {
+" 	\   'cocstatus': 'coc#status'
+" 	\ },
+" 	\ }
 set guicursor=
 
 
@@ -283,9 +295,10 @@ set path=.,**
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:netrw_banner=0 " Disable netrw banner
-let g:netrw_liststyle=3 " Tree style
-let g:netrw_localrmdir='rm -r'
+let g:netrw_banner = 0 " Disable netrw banner
+let g:netrw_liststyle = 3 " Tree style
+let g:netrw_localrmdir = 'rm -r'
+" let g:netrw_browse_split = 1 " Open files in a new horizontal split 
 
 
 
@@ -321,7 +334,7 @@ set shiftwidth=2
 set smarttab
 set softtabstop=2
 set tabstop=2
-set noexpandtab
+set expandtab
 
 
 
