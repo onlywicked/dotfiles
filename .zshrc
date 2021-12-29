@@ -10,6 +10,11 @@ zstyle ':completion:*' menu select
 setopt CORRECT
 setopt CORRECT_ALL
 
+export PATH="/opt/homebrew/bin:$PATH"
+
+## java config
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+
 # macos version does not support tmux-256color
 # So, overriding it the brew installed version
 NCURSES_PATH=/opt/homebrew/opt/ncurses/bin
@@ -28,5 +33,7 @@ if [ -x "$(command -v starship)" ] ; then
 fi
 
 if [ -x "$(command -v kubectl)" ] ; then
+  alias k="kubectl"
   source <(kubectl completion zsh)
+  compdef k="kubectl"
 fi

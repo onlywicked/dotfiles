@@ -11,6 +11,12 @@ alias mv="mv -i"
 alias rm="rm -i"
 
 ## git aliases
-alias gs='git status'
-alias gl='git log --all --decorate --oneline --graph'
+alias gs="git status"
+alias gl="git log --all --decorate --oneline --graph"
 
+OFFICE_WORKSPACE="/Users/arman/code/github/flahmingo"
+alias office="cd $OFFICE_WORKSPACE"
+
+function protogen() {
+	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" --go-grpc_out=$2 --go_out=$2 --graphql_out=field_camel:$2 $1
+}

@@ -562,7 +562,7 @@ hints:
        mods: None
      binding:
        key: U
-       mods: Control
+       mods: Control|Shift
 
 # Mouse bindings
 #

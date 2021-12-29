@@ -297,7 +297,7 @@ set path=.,**
 
 let g:netrw_banner = 0 " Disable netrw banner
 let g:netrw_liststyle = 3 " Tree style
-let g:netrw_localrmdir = 'rm -r'
+let g:netrw_localrmdir = 'rm -rf'
 " let g:netrw_browse_split = 1 " Open files in a new horizontal split 
 
 
@@ -316,6 +316,7 @@ set smartcase
 set ignorecase
 set hlsearch
 set incsearch
+
 
 
 
@@ -389,8 +390,6 @@ nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
-
-
 
 
 
