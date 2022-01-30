@@ -20,3 +20,5 @@ alias office="cd $OFFICE_WORKSPACE"
 function protogen() {
 	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" --go-grpc_out=$2 --go_out=$2 --graphql_out=field_camel:$2 $1
 }
+
+alias play="mpv --autofit-larger=100% --geometry=1080-2-2"
