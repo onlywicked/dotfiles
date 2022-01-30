@@ -213,6 +213,10 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 Plug 'nicwest/vim-http'
 
+Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{ 'path': '~/code/notes', 'path_html': '~/code/notes_html' }]
+let g:vimwiki_links_space_char = '_'
+
 call plug#end()
 
 
@@ -423,3 +427,4 @@ command! -nargs=0 Organize :call CocAction('runCommand', 'editor.action.organize
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let $MYVIMRC = '~/.vimrc'
+
