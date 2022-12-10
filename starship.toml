@@ -12,7 +12,15 @@ disabled = true
 
 [aws.region_aliases]
 
+[buf]
+disabled = true
+
 [battery]
+
+
+[c]
+format = "via [$name $version]($style)"
+disabled = true
 
 [character]
 format = '$symbol '
