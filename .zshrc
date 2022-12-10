@@ -22,10 +22,8 @@ if [ -d $NCURSES_PATH ] ; then
   export PATH="$NCURSES_PATH:$PATH"
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [[ -s "/Users/arman/.gvm/scripts/gvm" ]] && source "/Users/arman/.gvm/scripts/gvm"
-
 
 if [ -x "$(command -v starship)" ] ; then
   export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
@@ -53,3 +51,6 @@ export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
 export YTFZF_PLAYER="mpv --autofit-larger=100% --geometry=1080-2-2"
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
