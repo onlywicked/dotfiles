@@ -39,5 +39,7 @@
     "javascriptreact": ["javascript"],
     "typescriptreact": ["typescript"]
   },
-  "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"]
+  "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"],
+  "sql.database": "postgresql",
+  "suggest.noselect": true
 }
