@@ -10,6 +10,7 @@
     "typescript",
     "typescriptreact"
   ],
+  "colors.enable": true,
   "clangd.fallbackFlags": ["-std=c++11"],
   "go.goplsOptions": {
     "buildFlags": ["-tags=integration"],

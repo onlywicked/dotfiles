@@ -29,8 +29,8 @@ call plug#begin('~/.vim/plugged')
 "" Utilities
 
 " NerdTree
-" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-" map <C-n> :NERDTreeToggle<CR>
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+map <C-n> :NERDTreeToggle<CR>
 
 " Auto Pair
 " Plug 'jiangmiao/auto-pairs'
@@ -260,15 +260,26 @@ Plug 'wojciechkepka/vim-github-dark'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'arcticicestudio/nord-vim'
 Plug 'onlywicked/oceanic-next', { 'branch': 'feature/dark-theme' }
+Plug 'haishanh/night-owl.vim'
 
-" let g:dracula#palette.bgdarker = ['#0F1419', 234]
-" let g:dracula#palette.bgdarker  = ['#191A21', 234]
 
 Plug 'nicwest/vim-http'
 
 Plug 'vimwiki/vimwiki'
-let g:vimwiki_list = [{ 'path': '~/code/notes', 'path_html': '~/code/notes_html' }]
+let g:vimwiki_global_ext = 0
+let g:vimwiki_list = [{
+			\	'path': '~/code/notes', 'path_html': '~/code/notes_html',
+			\ 'syntax': 'markdown', 'ext': '.md', 'auto_toc': 1
+			\ }]
 let g:vimwiki_links_space_char = '_'
+
+Plug 'github/copilot.vim'
+imap <silent><script><expr> <C-k> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
+Plug 'tpope/vim-fugitive'
+
+Plug 'prisma/vim-prisma'
 
 call plug#end()
 

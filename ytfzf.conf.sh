@@ -37,7 +37,7 @@ mpv_config="-hwdec --autofit-larger=100% --geometry=1080-2-2"
 
 video_player() {
 	#this function should not be set as the url_handler as it is part of multimedia_player
-	dep_check "mpv" || die 3 "mpv is not installed\n"
+	# dep_check "mpv" || die 3 "mpv is not installed\n"
 	case "$is_detach" in
 		0) mpv $mpv_config --ytdl-format="$video_pref" "$@" ;;
 		1) setsid -f mpv --ytdl-format="$video_pref" "$@" > /dev/null 2>&1 ;;

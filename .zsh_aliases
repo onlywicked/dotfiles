@@ -14,11 +14,40 @@ alias rm="rm -i"
 alias gs="git status"
 alias gl="git log --all --decorate --oneline --graph"
 
+MY_WORKSPACE="/Users/arman/code/onlywicked"
+alias mine="cd $MY_WORKSPACE"
+
 OFFICE_WORKSPACE="/Users/arman/code/github/flahmingo"
 alias office="cd $OFFICE_WORKSPACE"
 
 function protogen() {
-	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" --go-grpc_out=$2 --go_out=$2 --graphql_out=field_camel:$2 $1
+	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" -I="$OFFICE_WORKSPACE/ship" --go-grpc_out=$2 --go_out=$2 --ship_out=$2 --graphql_out=field_camel:$2 $1
+}
+
+function protoship() {
+	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" -I="$OFFICE_WORKSPACE/ship" --go-grpc_out=$2 --go_out=$2 --ship_out=$2 $1
+}
+
+function protoraw() {
+	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" --go_out=paths=source_relative:$2 $1
 }
 
 alias play="mpv --autofit-larger=100% --geometry=1080-2-2"
+
+CLOUD_SQL_PROXY_BIN="cloud_sql_proxy"
+
+alias proxy_prod_db="$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=flahmingo-prod-357017:northamerica-northeast1:flahmingo-prod-357017-pg14=tcp:3331 -dir /tmp"
+alias proxy_dev_db="$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=development-flahmingo:northamerica-northeast1:flahmingo-dev-14=tcp:3332 -dir /tmp"
+alias proxy_close_db="$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=flahmingo-closed-beta:northamerica-northeast1:flahmingo-closed-beta-pg14=tcp:3334 -dir /tmp"
+
+# CLOUD_SQL_PROXY_BIN="cloud-sql-proxy"
+
+# alias proxy_prod_db="$CLOUD_SQL_PROXY_BIN -g -i flahmingo-prod-357017:northamerica-northeast1:flahmingo-prod-357017-pg14 -p 3331"
+# alias proxy_dev_db="$CLOUD_SQL_PROXY_BIN -g -i development-flahmingo:northamerica-northeast1:flahmingo-dev-14 -p 3332"
+# alias proxy_staging_db="$CLOUD_SQL_PROXY_BIN -g -i flahmingo-preprod:northamerica-northeast1:flahmingo-preprod-primary-db-14 -p 3333"
+# alias proxy_close_db="$CLOUD_SQL_PROXY_BIN -g -i flahmingo-closed-beta:northamerica-northeast1:flahmingo-closed-beta-pg14 -p 3334"
+# alias proxy_terraform_db="$CLOUD_SQL_PROXY_BIN -g -i flahmingo-terraform-dev-352001:northamerica-northeast1:flahmingo-terraform-dev-352001-pg14 -p 3335"
+
+alias list_used_port="sudo lsof -i TCP -s TCP:LISTEN -P -n"
+
+alias gcloud_config="gcloud config configurations activate"

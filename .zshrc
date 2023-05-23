@@ -23,7 +23,7 @@ if [ -d $NCURSES_PATH ] ; then
 fi
 
 
-[[ -s "/Users/arman/.gvm/scripts/gvm" ]] && source "/Users/arman/.gvm/scripts/gvm"
+# [[ -s "/Users/arman/.gvm/scripts/gvm" ]] && source "/Users/arman/.gvm/scripts/gvm"
 
 if [ -x "$(command -v starship)" ] ; then
   export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
@@ -37,8 +37,8 @@ if [ -x "$(command -v kubectl)" ] ; then
 fi
 
 ## golang config
-export GOPATH="$HOME/code/go"
-export PATH="$GOPATH/bin:$PATH"
+# export GOPATH="$HOME/code/go"
+# export PATH="$GOPATH/bin:$PATH"
 
 ## n config
 export N_PREFIX=$HOME/.n
@@ -54,3 +54,14 @@ export YTFZF_PLAYER="mpv --autofit-larger=100% --geometry=1080-2-2"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+export GOPATH="$HOME/code/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
