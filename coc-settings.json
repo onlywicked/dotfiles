@@ -11,12 +11,13 @@
     "typescriptreact"
   ],
   "colors.enable": true,
-  "clangd.fallbackFlags": ["-std=c++11"],
+  // "clangd.fallbackFlags": ["-std=c++11"],
   "go.goplsOptions": {
     "buildFlags": ["-tags=integration"],
     "allowModfileModifications": true,
     "gofumpt": true,
-    "staticcheck": true
+    "staticcheck": true,
+    "allowImplicitNetworkAccess": true
   },
   "html.format.wrapLineLength": 0,
   "html.format.indentHandlebars": false,
@@ -41,6 +42,6 @@
     "typescriptreact": ["typescript"]
   },
   "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"],
-  "sql.database": "postgresql",
+  // "sql.database": "postgresql",
   "suggest.noselect": true
 }

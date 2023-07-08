@@ -50,4 +50,8 @@ alias proxy_close_db="$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=flahming
 
 alias list_used_port="sudo lsof -i TCP -s TCP:LISTEN -P -n"
 
-alias gcloud_config="gcloud config configurations activate"
+alias activate_gconfig="gcloud config configurations activate"
+
+function tunnel_cloud_sql() {
+	$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=$1=tcp:$2 -dir /tmp
+}

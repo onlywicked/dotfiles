@@ -242,7 +242,7 @@ let g:polyglot_disabled = ['python']
 let g:rustfmt_autosave = 1
 
 "" Firestore support
-Plug 'delphinus/vim-firestore'
+" Plug 'delphinus/vim-firestore'
 
 
 "" Themes
@@ -253,6 +253,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'cocopon/iceberg.vim'
 " Plug 'mhartington/oceanic-next'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'rose-pine/vim', { 'as': 'rose-pine' }
 
 
 Plug 'morhetz/gruvbox'
@@ -280,6 +281,11 @@ let g:copilot_no_tab_map = v:true
 Plug 'tpope/vim-fugitive'
 
 Plug 'prisma/vim-prisma'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'mbbill/undotree'
+nnoremap <silent> <leader>u :UndotreeToggle<CR>
+
+" Plug 'huggingface/hfcc.nvim'
 
 call plug#end()
 
@@ -293,9 +299,9 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Syntax Highlighting
-syntax enable
+" syntax enable
 " Enable filetype plugins
-filetype plugin indent on
+" filetype plugin indent on
 
 set number relativenumber
 set linebreak
@@ -467,7 +473,6 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Command Mapping
@@ -499,3 +504,86 @@ command! -nargs=0 Organize :call CocAction('runCommand', 'editor.action.organize
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let $MYVIMRC = '~/.vimrc'
 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tree Sitter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require 'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = {
+    "vimdoc", "c", "lua", "vim", "vimdoc", "query", 
+    "typescript", "tsx", "javascript",
+    "go",
+    "diff",
+    "sql",
+  },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "markdown" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    -- disable = function(lang, buf)
+    --     local max_filesize = 100 * 1024 -- 100 KB
+    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+    --     if ok and stats and stats.size > max_filesize then
+    --         return true
+    --     end
+    -- end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" HF Setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" lua << EOF
+" require('hfcc').setup({
+"     api_token = "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", -- cf Install paragraph
+" 		model = "bigcode/starcoderplus", -- can be a model ID or an http(s) endpoint
+" 		-- parameters that are added to the request body
+" 		query_params = {
+" 			max_new_tokens = 100,
+" 			temperature = 0.2,
+" 			top_p = 0.95,
+" 			stop_token = "<|endoftext|>",
+" 		},
+" 		-- set this if the model supports fill in the middle
+" 		fim = {
+" 			enabled = true,
+" 			prefix = "<fim_prefix>",
+" 			middle = "<fim_middle>",
+" 			suffix = "<fim_suffix>",
+" 		},
+" 		debounce_ms = 80,
+" 		accept_keymap = "<Tab>",
+" 		dismiss_keymap = "<S-Tab>",-- cf Setup
+" })
+" EOF

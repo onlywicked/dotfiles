@@ -65,3 +65,11 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 export GOPATH="$HOME/code/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+
+# pnpm
+export PNPM_HOME="/Users/arman/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
