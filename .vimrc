@@ -46,6 +46,7 @@ nnoremap <Leader>rg :Rg
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 nnoremap <C-p> :Files<CR>
+nnoremap <M-p> :Buffers<CR>
 
 " Vim Easy Align
 Plug 'junegunn/vim-easy-align'
@@ -109,6 +110,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gI <Plug>(coc-implementation)
 
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Use K to show documentation in preview window.
 " nmap <silent> K :call CocActionAsync('doHover')<cr>
@@ -143,8 +145,11 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap keys for applying codeAction to the current buffer.
+" " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
+
+" Remap keys for apply code actions affect whole buffer
+nmap <leader>as  <Plug>(coc-codeaction-source)
 
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
@@ -155,6 +160,29 @@ nmap <leader>cl  <Plug>(coc-codelens-action)
 " Format the select line of code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+" Remap keys for applying refactor code actions
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+
+" Mappings for CoCList
+" Show all diagnostics
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " inoremap <silent><expr> <TAB>
 " 	\ pumvisible() ? "\<C-n>" :
@@ -201,7 +229,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 
 " Golang Support
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go' ", { 'do': ':GoUpdateBinaries' }
 
 "" vim-go coc.nvim settings
 "" disable settings conflicting with coc-go
@@ -210,6 +238,7 @@ let g:go_doc_keywordprg_enabled = 0
 let g:go_gopls_enabled = 0
 let g:go_code_completion_enabled = 0
 let g:go_fmt_autosave = 0
+let g:go_disable_autoinstall = 1
 
 "" vim-go highlight settings
 " let g:go_highlight_build_constraints = 1
@@ -237,9 +266,9 @@ let g:user_emmet_mode = 'a'
 
 
 "" Language Support
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python']
-let g:rustfmt_autosave = 1
+" Plug 'sheerun/vim-polyglot'
+" let g:polyglot_disabled = ['python']
+" let g:rustfmt_autosave = 1
 
 "" Firestore support
 " Plug 'delphinus/vim-firestore'
@@ -254,6 +283,8 @@ Plug 'cocopon/iceberg.vim'
 " Plug 'mhartington/oceanic-next'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'rose-pine/vim', { 'as': 'rose-pine' }
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+"let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 
 Plug 'morhetz/gruvbox'
@@ -278,6 +309,8 @@ Plug 'github/copilot.vim'
 imap <silent><script><expr> <C-k> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true
 
+" Plug 'zbirenbaum/copilot.lua'
+
 Plug 'tpope/vim-fugitive'
 
 Plug 'prisma/vim-prisma'
@@ -286,6 +319,7 @@ Plug 'mbbill/undotree'
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 
 " Plug 'huggingface/hfcc.nvim'
+
 
 call plug#end()
 
@@ -319,12 +353,34 @@ set nowrap
 
 " colorscheme codedark
 colorscheme dracula
-" let g:dracula#palette.bg        = ['#0F1419', 236]
 
-augroup dracula_customization
-	autocmd!
-  " autocmd ColorScheme dracula highlight Normal ctermfg=white ctermbg=black
-augroup end
+let s:base = "#0F1419"
+let s:text = "#CDD6F4"
+
+function! s:hi(group, guisp, guifg, guibg, gui, cterm)
+  let cmd = ""
+  if a:guisp != ""
+    let cmd = cmd . " guisp=" . a:guisp
+  endif
+  if a:guifg != ""
+    let cmd = cmd . " guifg=" . a:guifg
+  endif
+  if a:guibg != ""
+    let cmd = cmd . " guibg=" . a:guibg
+  endif
+  if a:gui != ""
+    let cmd = cmd . " gui=" . a:gui
+  endif
+  if a:cterm != ""
+    let cmd = cmd . " cterm=" . a:cterm
+  endif
+  if cmd != ""
+    exec "hi " . a:group . cmd
+  endif
+endfunction
+
+call s:hi("Normal", "NONE", s:text, s:base, "NONE", "NONE")
+
 
 " colorscheme gruvbox
 " colorscheme OceanicNextDark
@@ -510,12 +566,15 @@ let $MYVIMRC = '~/.vimrc'
 " Tree Sitter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
+
+-- local parser_config = require'nvim-treesitter.parsers'.get_parser_configs()
+
 require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = {
     "vimdoc", "c", "lua", "vim", "vimdoc", "query", 
     "typescript", "tsx", "javascript",
-    "go",
+    "go", "gomod", "gosum", "gotmpl",
     "diff",
     "sql",
   },
@@ -556,34 +615,15 @@ require 'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+
+
+	-- parser_config.gotmpl = {
+	-- 	install_info = {
+	-- 		url = "https://github.com/ngalaiko/tree-sitter-go-template",
+	-- 		files = {"src/parser.c"}
+	-- 	},
+	-- 	filetype = "gotmpl",
+	-- 	used_by = {"gohtmltmpl", "gotexttmpl", "gotmpl", "yaml"}
+	-- }
 }
 EOF
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" HF Setup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" lua << EOF
-" require('hfcc').setup({
-"     api_token = "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", -- cf Install paragraph
-" 		model = "bigcode/starcoderplus", -- can be a model ID or an http(s) endpoint
-" 		-- parameters that are added to the request body
-" 		query_params = {
-" 			max_new_tokens = 100,
-" 			temperature = 0.2,
-" 			top_p = 0.95,
-" 			stop_token = "<|endoftext|>",
-" 		},
-" 		-- set this if the model supports fill in the middle
-" 		fim = {
-" 			enabled = true,
-" 			prefix = "<fim_prefix>",
-" 			middle = "<fim_middle>",
-" 			suffix = "<fim_suffix>",
-" 		},
-" 		debounce_ms = 80,
-" 		accept_keymap = "<Tab>",
-" 		dismiss_keymap = "<S-Tab>",-- cf Setup
-" })
-" EOF

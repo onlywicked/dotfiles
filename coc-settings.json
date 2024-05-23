@@ -1,27 +1,48 @@
 // vim: ft=jsonc
 
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "go",
-    "javascript",
-    "json",
-    "jsonc",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  // "coc.preferences.formatOnSaveFiletypes": [
+  //   "go",
+  //   "javascript",
+  //   "json",
+  //   "jsonc",
+  //   "javascriptreact",
+  //   "typescript",
+  //   "typescriptreact"
+  // ],
+  "coc.preferences.formatOnSave": true,
   "colors.enable": true,
-  // "clangd.fallbackFlags": ["-std=c++11"],
-  "go.goplsOptions": {
-    "buildFlags": ["-tags=integration"],
-    "allowModfileModifications": true,
-    "gofumpt": true,
-    "staticcheck": true,
-    "allowImplicitNetworkAccess": true
-  },
+  "clangd.fallbackFlags": ["-std=c++11"],
+  // "go.goplsOptions": {
+  //   "buildFlags": ["-tags=integration"],
+  //   // "allowModfileModifications": true,
+  //   "gofumpt": true,
+  //   "staticcheck": true,
+  //   "allowImplicitNetworkAccess": true,
+  //   "completeUnimported": true
+  // },
   "html.format.wrapLineLength": 0,
   "html.format.indentHandlebars": false,
   "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
+    },
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.work", "go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "gofumpt": true,
+        "staticcheck": true,
+        "allowImplicitNetworkAccess": true,
+        "completeUnimported": true
+      }
+    }
     // "graphql": {
     //   "command": "graphql-lsp",
     //   "args": ["server", "-m", "stream"],
@@ -43,5 +64,6 @@
   },
   "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"],
   // "sql.database": "postgresql",
-  "suggest.noselect": true
+  "suggest.noselect": true,
+  "snippets.ultisnips.pythonPrompt": false
 }

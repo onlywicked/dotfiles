@@ -20,3 +20,6 @@ if [ -f ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
 fi
 
+
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

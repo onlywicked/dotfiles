@@ -13,7 +13,17 @@ setopt CORRECT_ALL
 export PATH="/opt/homebrew/bin:$PATH"
 
 ## java config
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+# export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+
+function setjdk() {
+  if [ $# -ne 0 ]; then
+    export JAVA_HOME=`/usr/libexec/java_home -v $@`
+    export PATH=$JAVA_HOME/bin:$PATH
+  else
+    echo "Usage: setjdk {version}"
+  fi
+}
 
 # macos version does not support tmux-256color
 # So, overriding it the brew installed version
@@ -39,6 +49,8 @@ fi
 ## golang config
 # export GOPATH="$HOME/code/go"
 # export PATH="$GOPATH/bin:$PATH"
+
+export GOPRIVATE=github.com/MyBeaconLabs
 
 ## n config
 export N_PREFIX=$HOME/.n
@@ -72,4 +84,17 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+export PATH=$PATH:$HOME/.maestro/bin
+
+
+# bun completions
+[ -s "/Users/arman/.bun/_bun" ] && source "/Users/arman/.bun/_bun"
+
+# WarpStream
+export PATH="/Users/arman/.warpstream:$PATH"
+

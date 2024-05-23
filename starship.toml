@@ -15,6 +15,9 @@ disabled = true
 [buf]
 disabled = true
 
+[bun]
+disabled = true
+
 [battery]
 
 
@@ -315,6 +318,9 @@ detect_files = [
     'build.boot',
 ]
 detect_folders = []
+
+[gradle]
+disabled = true
 
 [jobs]
 threshold = 1

@@ -1,9 +1,9 @@
 ## For better colors
-if [ -x "$(command -v exa)" ] ; then
-	alias ll="exa -alFg"
-	alias la="exa"
-	alias ls="exa"
-	alias l="exa -F"
+if [ -x "$(command -v eza)" ] ; then
+	alias ll="eza -algF"
+	alias la="eza"
+	alias ls="eza"
+	alias l="eza -F"
 fi
 
 ## Prompt before overwriting files
@@ -17,8 +17,11 @@ alias gl="git log --all --decorate --oneline --graph"
 MY_WORKSPACE="/Users/arman/code/onlywicked"
 alias mine="cd $MY_WORKSPACE"
 
-OFFICE_WORKSPACE="/Users/arman/code/github/flahmingo"
+WORKSPACE="/Users/arman/code/"
+OFFICE_WORKSPACE="/Users/arman/code/github/midaslabs"
+
 alias office="cd $OFFICE_WORKSPACE"
+alias mybeacon="cd $WORKSPACE/github/mybeacon"
 
 function protogen() {
 	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" -I="$OFFICE_WORKSPACE/ship" --go-grpc_out=$2 --go_out=$2 --ship_out=$2 --graphql_out=field_camel:$2 $1
@@ -54,4 +57,199 @@ alias activate_gconfig="gcloud config configurations activate"
 
 function tunnel_cloud_sql() {
 	$CLOUD_SQL_PROXY_BIN -enable_iam_login -instances=$1=tcp:$2 -dir /tmp
+}
+
+export AWS_PROFILE=mybeacon-lower
+
+function aws_ctx() {
+  export AWS_PROFILE="$(aws configure list-profiles | fzf)"
+  echo "Switched to profile ""$AWS_PROFILE""."
+}
+
+
+ssh_dev_ssm() {
+    INSTANCE_ID=$(aws ec2 describe-instances --filter Name=tag:Name,Values=beacon-development-ssm Name=instance-state-name,Values=running --query "Reservations[0].Instances[0].InstanceId" --output text)
+    echo "SSHing to Jump Box: $INSTANCE_ID"
+    aws ssm start-session --target $INSTANCE_ID --document-name "AWS-StartSSHSession"
+}
+
+proxy_aws_dev_tunnel() {
+    INSTANCE_ID=$(aws ec2 describe-instances --filter Name=tag:Name,Values=beacon-development-ssm Name=instance-state-name,Values=running --query "Reservations[0].Instances[0].InstanceId" --output text)
+    echo "Connecting to Jump Box: $INSTANCE_ID"
+    aws ssm start-session --region ca-central-1 --document-name AWS-StartPortForwardingSessionToRemoteHost --parameters host="beacon-development-db.cluster-ci7km3zjdpfs.ca-central-1.rds.amazonaws.com",portNumber="5432",localPortNumber="5433" --target $INSTANCE_ID
+}
+
+get_aws_profile() {
+  if [ "$1" = "dev" ]; then
+    echo "mybeacon-lower"
+  elif [ "$1" = "staging" ]; then
+    echo "mybeacon-staging"
+  elif [ "$1" = "prod" ]; then
+    echo "mybeacon-production"
+  fi
+}
+
+get_aws_tunnel_port() {
+  if [ "$1" = "dev" ]; then
+    echo "5433"
+  elif [ "$1" = "staging" ]; then
+    echo "5434"
+  elif [ "$1" = "prod" ]; then
+    echo "5432"
+  fi
+}
+
+
+RDS_DEV_HOST=beacon-development-db.cluster-ci7km3zjdpfs.ca-central-1.rds.amazonaws.com
+RDS_STAGING_HOST=beacon-staging-db.cluster-cefx3rdbbvls.ca-central-1.rds.amazonaws.com
+RDS_PRODUCTION_HOST=beacon-production-db.cluster-cn0g0icuouwa.ca-central-1.rds.amazonaws.com
+
+get_aws_rds_host() {
+  if [ "$1" = "dev" ]; then
+    echo $RDS_DEV_HOST
+  elif [ "$1" = "staging" ]; then
+    echo $RDS_STAGING_HOST
+  elif [ "$1" = "prod" ]; then
+    echo $RDS_PRODUCTION_HOST
+  fi
+}
+
+get_aws_instance_id() {
+  TAG_NAME=development
+  if [ "$1" = "dev" ]; then
+    TAG_NAME=development
+  elif [ "$1" = "staging" ]; then
+    TAG_NAME=beacon-staging
+  elif [ "$1" = "prod" ]; then
+    TAG_NAME=production
+  fi
+
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  INSTANCE_ID=$(AWS_PROFILE=$AWS_PROFILE aws ec2 describe-instances --filter Name=tag:Name,Values=beacon-$TAG_NAME-ssm Name=instance-state-name,Values=running --query "Reservations[0].Instances[0].InstanceId" --output text)
+
+  echo $INSTANCE_ID
+}
+
+proxy_aws_tunnel() {
+  TAG_NAME=development
+  if [ "$1" = "dev" ]; then
+    TAG_NAME=development
+  elif [ "$1" = "staging" ]; then
+    TAG_NAME=staging
+  elif [ "$1" = "prod" ]; then
+    TAG_NAME=production
+  fi
+
+  AWS_PROFILE=$(get_aws_profile $1)
+  PORT=$(get_aws_tunnel_port $1)
+  HOST=$(get_aws_rds_host $1)
+
+
+  INSTANCE_ID=$(get_aws_instance_id $1)
+
+  echo "Connecting to Jump Box ($TAG_NAME): $INSTANCE_ID"
+
+  AWS_PROFILE=$AWS_PROFILE aws ssm start-session --region ca-central-1 --document-name AWS-StartPortForwardingSessionToRemoteHost --parameters host="$HOST",portNumber="5432",localPortNumber="$PORT" --target $INSTANCE_ID
+}
+
+
+aws_pg_pass() {
+  aws rds generate-db-auth-token --region ca-central-1 --hostname beacon-development-db.cluster-ci7km3zjdpfs.ca-central-1.rds.amazonaws.com --port 5432 --username arman@mybeacon.ca
+}
+
+aws_container_logs() {
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  GROUP_NAME=beacon-development-fargate
+  if [ -n "$1" ] && [ "$1" = "dev" ]; then
+    GROUP_NAME=beacon-development-fargate
+  elif [ -n "$1" ] && [ "$1" = "prod" ]; then
+    GROUP_NAME=beacon-production-fargate
+  elif [ -n "$1" ] && [ "$1" = "staging" ]; then
+    GROUP_NAME=beacon-staging-fargate
+  fi
+
+  AWS_PROFILE=$AWS_PROFILE aws logs tail --follow --since 2m --format short  $GROUP_NAME/$2
+}
+
+BEACON_EMAIL=arman@mybeacon.ca
+
+get_aws_ssm_session() {
+  INSTANCE_ID=$(get_aws_instance_id $1)
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  SESSION_ID=$(AWS_PROFILE=$AWS_PROFILE aws ssm describe-sessions --state Active --filters key=Target,value=$INSTANCE_ID --query 'Sessions[0].SessionId' --output text)
+
+  echo $SESSION_ID
+}
+
+login_rds() {
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+    echo "Usage: login_rds <environment> <username> <database>"
+    echo "Example: login_rds dev arman@mybeacon.ca beacon"
+    return
+  fi
+
+  HOST=$(get_aws_rds_host $1)
+  PORT=$(get_aws_tunnel_port $1)
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  echo "Starting tunnel"
+
+  proxy_aws_tunnel $1 &
+  pid=$!
+
+  sleep 5
+
+  echo "Connecting to $HOST:$PORT"
+
+  PGPASSWORD=$(AWS_PROFILE=$AWS_PROFILE aws rds generate-db-auth-token --hostname $HOST --port 5432 --username $2)
+
+  PGPASSWORD=$PGPASSWORD PGROOT=/Users/arman/.postgresql/root.crt pgcli -h 127.0.0.1 -p $PORT -U $2 -d $3
+
+  echo "Closing tunnel"
+  SESSION_ID=$(get_aws_ssm_session $1)
+  # If the tunnel is still running, kill it by session id (not by pid). Session id could be "None" if the tunnel is already closed.
+  # If the tunnel is already closed, kill it by pid.
+  if [ "$SESSION_ID" != "None" ]; then
+    AWS_PROFILE=$AWS_PROFILE aws ssm terminate-session --session-id "$SESSION_ID"
+  else
+    kill $pid
+  fi
+}
+
+dump_rds() {
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
+    echo "Usage: dump_rds <environment> <username> <database> <filename>"
+    echo "Example: dump_rds dev arman@mybeacon.ca beacon filename.sql"
+    return
+  fi
+
+  HOST=$(get_aws_rds_host $1)
+  PORT=$(get_aws_tunnel_port $1)
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  echo "Starting tunnel"
+
+  proxy_aws_tunnel $1 &
+  pid=$!
+
+  sleep 10
+
+  echo "Connecting to $HOST:$PORT"
+
+  PGPASSWORD=$(AWS_PROFILE=$AWS_PROFILE aws rds generate-db-auth-token --hostname $HOST --port 5432 --username $2)
+
+  PGPASSWORD=$PGPASSWORD PGROOT=/Users/arman/.postgresql/root.crt pg_dump -h 127.0.0.1 -p $PORT -U $2 -d $3 > $4
+
+  echo "Closing tunnel"
+  SESSION_ID=$(get_aws_ssm_session $1)
+  # If the tunnel is still running, kill it by session id (not by pid). Session id could be "None" if the tunnel is already closed.
+  # If the tunnel is already closed, kill it by pid.
+  if [ "$SESSION_ID" != "None" ]; then
+    AWS_PROFILE=$AWS_PROFILE aws ssm terminate-session --session-id "$SESSION_ID"
+  else
+    kill $pid
+  fi
 }
