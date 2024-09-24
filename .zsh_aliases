@@ -14,7 +14,7 @@ alias rm="rm -i"
 alias gs="git status"
 alias gl="git log --all --decorate --oneline --graph"
 
-MY_WORKSPACE="/Users/arman/code/onlywicked"
+MY_WORKSPACE="/Users/arman/code/github/onlywicked"
 alias mine="cd $MY_WORKSPACE"
 
 WORKSPACE="/Users/arman/code/"
@@ -119,7 +119,7 @@ get_aws_instance_id() {
   if [ "$1" = "dev" ]; then
     TAG_NAME=development
   elif [ "$1" = "staging" ]; then
-    TAG_NAME=beacon-staging
+    TAG_NAME=staging
   elif [ "$1" = "prod" ]; then
     TAG_NAME=production
   fi
@@ -129,6 +129,40 @@ get_aws_instance_id() {
   INSTANCE_ID=$(AWS_PROFILE=$AWS_PROFILE aws ec2 describe-instances --filter Name=tag:Name,Values=beacon-$TAG_NAME-ssm Name=instance-state-name,Values=running --query "Reservations[0].Instances[0].InstanceId" --output text)
 
   echo $INSTANCE_ID
+}
+
+proxy_ecs_app() {
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+    echo "Usage: proxy_ecs_app <environment> <host:port> <proxy_port>"
+    echo "Example: proxy_ecs_app dev profile.apps.beacon.internal:8080 8081"
+    return
+  fi
+
+  TAG_NAME=development
+  if [ "$1" = "dev" ]; then
+    TAG_NAME=development
+  elif [ "$1" = "staging" ]; then
+    TAG_NAME=staging
+  elif [ "$1" = "prod" ]; then
+    TAG_NAME=production
+  fi
+
+  AWS_PROFILE=$(get_aws_profile $1)
+  ADDR=$2
+
+  # Split the address into host and port
+
+  HOST=$(echo "$ADDR" | cut -d':' -f1)
+  PORT=$(echo "$ADDR" | cut -d':' -f2)
+
+
+  INSTANCE_ID=$(get_aws_instance_id $1)
+
+  PROXY_PORT=$3
+
+  echo "Tunneling ${HOST}:${PORT} ($TAG_NAME) to ${PROXY_PORT}: $INSTANCE_ID"
+
+  AWS_PROFILE=$AWS_PROFILE aws ssm start-session --region ca-central-1 --document-name AWS-StartPortForwardingSessionToRemoteHost --parameters host="$HOST",portNumber="$PORT",localPortNumber="$PROXY_PORT" --target $INSTANCE_ID
 }
 
 proxy_aws_tunnel() {
@@ -184,6 +218,22 @@ get_aws_ssm_session() {
   echo $SESSION_ID
 }
 
+
+generate_aws_rds_auth_token() {
+  if [ -z "$1" ] || [ -z "$2"] ]; then
+    echo "Usage: generate_aws_rds_auth_token <environment> <username>"
+    echo "Example: generate_aws_rds_auth_token dev arman@mybeacon.ca"
+
+    return
+  fi
+
+  HOST=$(get_aws_rds_host $1)
+
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  AWS_PROFILE=$AWS_PROFILE aws rds generate-db-auth-token --hostname $HOST --port 5432 --username $2
+}
+
 login_rds() {
   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
     echo "Usage: login_rds <environment> <username> <database>"
@@ -200,7 +250,7 @@ login_rds() {
   proxy_aws_tunnel $1 &
   pid=$!
 
-  sleep 5
+  sleep 10
 
   echo "Connecting to $HOST:$PORT"
 
@@ -252,4 +302,34 @@ dump_rds() {
   else
     kill $pid
   fi
+}
+
+
+migrate_rds() {
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
+    echo "Usage: migrate_rds <environment> <username> <database> <host>:<port>"
+    echo "Example: migrate_rds dev arman@mybeacon.ca beacon localhost:5432"
+    return
+  fi
+
+  env=$1
+  # trim the username and url encode it
+  username=$(echo $2 | tr -d '[:space:]' | jq -sRr @uri)
+  database=$3
+  host_port=$4
+
+  HOST=$(get_aws_rds_host $1)
+  PORT=$(get_aws_tunnel_port $1)
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  PGPASSWORD=$(AWS_PROFILE=$AWS_PROFILE aws rds generate-db-auth-token --hostname $HOST --port 5432 --username $2)
+
+  # url encode the password
+  PGPASSWORD=$(echo $PGPASSWORD | tr -d '[:space:]' | jq -sRr @uri)
+
+  POSTGRES_URL="postgres://$username:$PGPASSWORD@$host_port/$database"
+
+  echo "Running pgroll with $POSTGRES_URL"
+
+  pgroll --postgres-url $POSTGRES_URL ${@:5}
 }
