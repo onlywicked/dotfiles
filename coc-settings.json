@@ -1,28 +1,13 @@
 // vim: ft=jsonc
 
 {
-  // "coc.preferences.formatOnSaveFiletypes": [
-  //   "go",
-  //   "javascript",
-  //   "json",
-  //   "jsonc",
-  //   "javascriptreact",
-  //   "typescript",
-  //   "typescriptreact"
-  // ],
+  "diagnostic.checkCurrentLine": true,
   "coc.preferences.formatOnSave": true,
   "colors.enable": true,
   "clangd.fallbackFlags": ["-std=c++11"],
-  // "go.goplsOptions": {
-  //   "buildFlags": ["-tags=integration"],
-  //   // "allowModfileModifications": true,
-  //   "gofumpt": true,
-  //   "staticcheck": true,
-  //   "allowImplicitNetworkAccess": true,
-  //   "completeUnimported": true
-  // },
   "html.format.wrapLineLength": 0,
   "html.format.indentHandlebars": false,
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
   "languageserver": {
     "terraform": {
       "command": "terraform-ls",
@@ -43,27 +28,16 @@
         "completeUnimported": true
       }
     }
-    // "graphql": {
-    //   "command": "graphql-lsp",
-    //   "args": ["server", "-m", "stream"],
-    //   "filetypes": [
-    //     "graphql",
-    //     "javascript",
-    //     "javascriptreact",
-    //     "typescript",
-    //     "typescriptreact"
-    //   ]
-    // }
   },
-  "prettier.arrowParens": "always",
-  "prettier.trailingComma": "es5",
+  "prettier.onlyUseLocalVersion": false,
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescriptreact": ["typescript"]
   },
   "snippets.ultisnips.directories": ["UltiSnips", "vim-snippets/snippets"],
-  // "sql.database": "postgresql",
   "suggest.noselect": true,
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false
 }
