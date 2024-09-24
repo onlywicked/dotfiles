@@ -85,16 +85,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-export PATH=$PATH:$HOME/.maestro/bin
-
 
 # bun completions
 [ -s "/Users/arman/.bun/_bun" ] && source "/Users/arman/.bun/_bun"
-
-# WarpStream
-export PATH="/Users/arman/.warpstream:$PATH"
-
