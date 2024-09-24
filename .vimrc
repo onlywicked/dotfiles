@@ -284,7 +284,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'rose-pine/vim', { 'as': 'rose-pine' }
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-"let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 
 Plug 'morhetz/gruvbox'
@@ -352,7 +352,8 @@ set nowrap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " colorscheme codedark
-colorscheme dracula
+" colorscheme dracula
+colorscheme catppuccin_mocha
 
 let s:base = "#0F1419"
 let s:text = "#CDD6F4"
@@ -379,7 +380,7 @@ function! s:hi(group, guisp, guifg, guibg, gui, cterm)
   endif
 endfunction
 
-call s:hi("Normal", "NONE", s:text, s:base, "NONE", "NONE")
+" call s:hi("Normal", "NONE", s:text, s:base, "NONE", "NONE")
 
 
 " colorscheme gruvbox
@@ -572,12 +573,13 @@ lua << EOF
 require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = {
-    "vimdoc", "c", "lua", "vim", "vimdoc", "query", 
     "typescript", "tsx", "javascript",
+    "rust",
     "go", "gomod", "gosum", "gotmpl",
     "diff",
     "sql",
   },
+
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,

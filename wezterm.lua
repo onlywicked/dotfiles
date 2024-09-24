@@ -1,8 +1,8 @@
 local wezterm = require "wezterm";
 
 return {
-	color_scheme = "ayu",	
-  font_size = 11,
+	color_scheme = "catppuccin-mocha",
+  font_size = 12,
   font = wezterm.font_with_fallback({
       "JetBrains Mono"
     }),
