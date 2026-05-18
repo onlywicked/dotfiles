@@ -2,7 +2,6 @@
 -- These settings do not depend on plugins and should work in plain Neovim.
 
 local opt = vim.opt
-local global = vim.g
 
 -- Use true color in the terminal so themes render corrrectly.
 opt.termguicolors = true
@@ -96,9 +95,3 @@ opt.timeoutlen = 500
 -- Better split defaults
 opt.splitright = true
 opt.splitbelow = true
-
--- Netrw Configuration
-global.netrw_banner = 0
-global.netrw_liststyle = 3
-global.netrw_localrmdir = "rm -rf"
-global.netrw_browse_split = 1

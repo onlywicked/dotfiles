@@ -7,6 +7,14 @@ return {
 
 		keys = {
 			{
+				"<C-p>",
+				function()
+					require("snacks").picker.files()
+				end,
+				desc = "Find files",
+			},
+
+			{
 				"<leader>pf",
 				function()
 					require("snacks").picker.files()
@@ -60,11 +68,6 @@ return {
 
 		opts = {
 			picker = {
-				enabled = true,
-			},
-
-			-- File explorer sidebar.
-			explorer = {
 				enabled = true,
 			},
 		},

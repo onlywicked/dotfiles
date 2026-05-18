@@ -8,6 +8,13 @@ return {
     lazy = false,
 
     opts = {
+      -- Keep Snacks Explorer disabled.
+      -- We still use Snacks for picker, indent guides, notifications, and Lua
+      -- debugging helpers, but the file explorer sidebar is intentionally off.
+      explorer = {
+        enabled = false,
+      },
+
       -- Better vim.ui.input().
       input = {
         enabled = true,

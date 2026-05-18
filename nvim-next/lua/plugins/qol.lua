@@ -3,14 +3,35 @@
 -- I took it from AstroNvim
 
 return {
-  -- Shows a popu of available keymaps after pressing a prefix key.
-  -- Example: pressing <leader> waits briefly, then shows matching mappings.
+  -- Shows a popup of available keymaps.
+  -- We keep it manual-only so it does not appear every time you pause after a
+  -- prefix key.
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    lazy = false,
+
+    keys = {
+      {
+        "<leader>w",
+        function()
+          require("which-key").show({
+            keys = "<leader>",
+            mode = "n",
+          })
+        end,
+        desc = "Show keymaps",
+      },
+    },
 
     opts = {
-      delay = 500,
+      -- Disable automatic triggers.
+      -- which-key currently expects an internal `triggers.modes` table to
+      -- exist, so an empty trigger list can crash when calling `show()`.
+      -- This harmless placeholder keeps that internal shape valid without
+      -- making which-key appear after normal prefix keys.
+      triggers = {
+        { "<Ignore>", mode = "n" },
+      },
     },
   },
 

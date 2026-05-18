@@ -13,6 +13,7 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 require("config.diagnostics")
+require("config.netrw")
 
 -- Bootstrap lazy.nvim, our plugin manager.
 -- If lazy.nvim is not installed yet, we would be cloning it automatically.
