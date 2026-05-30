@@ -22,7 +22,19 @@ local servers = {
 	clangd = {},
 	cssls = {},
 	html = {},
-	jsonls = {},
+	jsonls = {
+		settings = {
+			json = {
+				-- Filled in during LSP setup after schemastore.nvim is loaded.
+				-- This gives jsonls access to common schemas like package.json,
+				-- tsconfig.json, GitHub workflows, and many others.
+				schemas = {},
+				validate = {
+					enable = true,
+				},
+			},
+		},
+	},
 	prismals = {},
 	rust_analyzer = {},
 	terraformls = {},
@@ -267,6 +279,8 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
+			-- Provides the SchemaStore catalog to jsonls/yamlls.
+			"b0o/schemastore.nvim",
 		},
 		opts = {
 			ensure_installed = server_names(),
@@ -285,6 +299,12 @@ return {
 			"BufNewFile",
 		},
 		config = function()
+			local ok, schemastore = pcall(require, "schemastore")
+
+			if ok then
+				servers.jsonls.settings.json.schemas = schemastore.json.schemas()
+			end
+
 			vim.lsp.config("*", default_lsp_config())
 
 			for _, server in ipairs(server_names()) do

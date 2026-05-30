@@ -5,6 +5,20 @@
 -- It replaces CoC's completion UI while keeping the same core goal: useful code
 -- suggestions with minimal configuration.
 
+local function has_words_before()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local line = cursor[1]
+  local column = cursor[2]
+
+  if column == 0 then
+    return false
+  end
+
+  local text = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+
+  return text:sub(column, column):match("%s") == nil
+end
+
 return {
   -- Fast completion engine with built-in LSP, path, snippets, and buffer
   -- sources. We pin to v1 releases because blink uses prebuilt fuzzy-matcher
@@ -21,10 +35,38 @@ return {
     },
 
     opts = {
-      -- Use blink's default insert-mode mappings.
-      -- This gives completion navigation/confirmation without custom key glue.
       keymap = {
-        preset = "default",
+        -- Match the old CoC completion muscle memory from .vimrc:
+        -- - <Tab> moves to the next completion item
+        -- - <Tab> opens completion when there is text before the cursor
+        -- - <Tab> inserts a real tab/indent when the cursor is after whitespace
+        -- - <S-Tab> moves to the previous completion item
+        -- - <CR> accepts the selected completion item
+        preset = "enter",
+
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.is_visible() then
+              return cmp.select_next()
+            end
+
+            if has_words_before() then
+              return cmp.show()
+            end
+          end,
+          "fallback",
+        },
+
+        ["<S-Tab>"] = {
+          function(cmp)
+            if cmp.is_visible() then
+              return cmp.select_prev()
+            end
+
+            -- CoC used <C-h> when the menu was not visible.
+            return vim.api.nvim_replace_termcodes("<C-h>", true, false, true)
+          end,
+        },
       },
 
       appearance = {
