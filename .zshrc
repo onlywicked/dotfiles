@@ -88,3 +88,6 @@ esac
 
 # bun completions
 [ -s "/Users/arman/.bun/_bun" ] && source "/Users/arman/.bun/_bun"
+
+# Machine-local overrides (not in dotfiles repo). Create ~/.zshrc.local on this host only.
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
