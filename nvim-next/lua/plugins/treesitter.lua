@@ -157,6 +157,10 @@ return {
         end
       end
 
+      -- native-markup has no grammar of its own, but its syntax is HTML-like,
+      -- so highlight those buffers with the HTML parser.
+      vim.treesitter.language.register("html", "native-markup")
+
       -- Configure where nvim-treesitter installs parser/query files.
       treesitter.setup({
         install_dir = vim.fn.stdpath("data") .. "/site",

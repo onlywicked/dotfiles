@@ -11,6 +11,7 @@ vim.g.maplocalleader = " "
 -- These files should not depend on plugins.
 require("config.options")
 require("config.keymaps")
+require("config.filetypes")
 require("config.autocmds")
 require("config.diagnostics")
 require("config.netrw")

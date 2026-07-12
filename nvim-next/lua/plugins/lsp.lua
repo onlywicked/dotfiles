@@ -37,6 +37,17 @@ local servers = {
 	},
 	prismals = {},
 	rust_analyzer = {},
+
+	-- Custom language server for native-markup (.native) files. It has no
+	-- nvim-lspconfig definition and no Mason package, so the full config lives
+	-- here and Mason skips it.
+	native_markup_lsp = {
+		mason = false,
+		cmd = { "native", "markup", "lsp" },
+		filetypes = { "native-markup" },
+		root_markers = { "build.zig", ".git" },
+	},
+
 	terraformls = {},
 	ts_ls = {},
 	yamlls = {},
@@ -126,11 +137,15 @@ local keys = {
 	{ "<leader>e", vim.diagnostic.open_float, desc = "Line diagnostics" },
 }
 
-local function server_names()
+-- Returns configured server names. Pass { mason = true } to keep only the
+-- servers Mason can install (a server opts out with `mason = false`).
+local function server_names(opts)
 	local names = {}
 
-	for server, _ in pairs(servers) do
-		if server ~= "*" then
+	for server, config in pairs(servers) do
+		local mason_ok = not (opts and opts.mason) or config.mason ~= false
+
+		if server ~= "*" and mason_ok then
 			names[#names + 1] = server
 		end
 	end
@@ -283,7 +298,7 @@ return {
 			"b0o/schemastore.nvim",
 		},
 		opts = {
-			ensure_installed = server_names(),
+			ensure_installed = server_names({ mason = true }),
 
 			-- This file configures and enables servers explicitly. Mason should
 			-- install servers, not decide which configs to enable.
@@ -308,7 +323,12 @@ return {
 			vim.lsp.config("*", default_lsp_config())
 
 			for _, server in ipairs(server_names()) do
-				vim.lsp.config(server, servers[server])
+				-- `mason` is our own bookkeeping flag, not part of the LSP client
+				-- config, so drop it before handing the table to vim.lsp.config().
+				local config = vim.tbl_extend("force", {}, servers[server])
+				config.mason = nil
+
+				vim.lsp.config(server, config)
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
