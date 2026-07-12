@@ -85,9 +85,26 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-
 # bun completions
 [ -s "/Users/arman/.bun/_bun" ] && source "/Users/arman/.bun/_bun"
+export PATH="/Users/arman/.bun/bin:$PATH"
+
+# llvm
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/arman/.lmstudio/bin"
+
+
+# pnpm
+export PNPM_HOME="/Users/arman/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
 
 # Machine-local overrides (not in dotfiles repo). Create ~/.zshrc.local on this host only.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

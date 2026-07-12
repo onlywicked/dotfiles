@@ -67,6 +67,28 @@ function aws_ctx() {
 }
 
 
+function switch_eks() {
+  if [ -z "$1" ]; then
+    echo "Usage: switch_eks <environment>"
+    echo "Example: switch_eks dev"
+
+    exit 1
+  fi
+
+
+  REGION=ca-central-1
+
+  CLUSTER_NAME=blue-cluster
+
+  AWS_PROFILE=$(get_aws_profile $1)
+
+  echo "Switching to EKS Cluster: $CLUSTER_NAME ($1)"
+
+  AWS_PROFILE=$AWS_PROFILE aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
+}
+
+
+
 ssh_dev_ssm() {
     INSTANCE_ID=$(aws ec2 describe-instances --filter Name=tag:Name,Values=beacon-development-ssm Name=instance-state-name,Values=running --query "Reservations[0].Instances[0].InstanceId" --output text)
     echo "SSHing to Jump Box: $INSTANCE_ID"
@@ -247,16 +269,16 @@ login_rds() {
 
   echo "Starting tunnel"
 
-  proxy_aws_tunnel $1 &
-  pid=$!
+  # proxy_aws_tunnel $1 &
+  # pid=$!
 
-  sleep 10
+  # sleep 10
 
   echo "Connecting to $HOST:$PORT"
 
   PGPASSWORD=$(AWS_PROFILE=$AWS_PROFILE aws rds generate-db-auth-token --hostname $HOST --port 5432 --username $2)
 
-  PGPASSWORD=$PGPASSWORD PGROOT=/Users/arman/.postgresql/root.crt pgcli -h 127.0.0.1 -p $PORT -U $2 -d $3
+  PGPASSWORD=$PGPASSWORD PGROOT=/Users/arman/.postgresql/root.crt pgcli -h $HOST -p 5432 -U $2 -d $3
 
   echo "Closing tunnel"
   SESSION_ID=$(get_aws_ssm_session $1)
@@ -303,6 +325,8 @@ dump_rds() {
     kill $pid
   fi
 }
+
+
 
 
 migrate_rds() {

@@ -305,9 +305,9 @@ let g:vimwiki_list = [{
 			\ }]
 let g:vimwiki_links_space_char = '_'
 
-Plug 'github/copilot.vim'
-imap <silent><script><expr> <C-k> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
+" Plug 'github/copilot.vim'
+" imap <silent><script><expr> <C-k> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
 
 " Plug 'zbirenbaum/copilot.lua'
 
