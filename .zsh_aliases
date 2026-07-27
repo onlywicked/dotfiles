@@ -14,14 +14,10 @@ alias rm="rm -i"
 alias gs="git status"
 alias gl="git log --all --decorate --oneline --graph"
 
-MY_WORKSPACE="/Users/arman/code/github/onlywicked"
+MY_WORKSPACE="~/code/github/onlywicked"
 alias mine="cd $MY_WORKSPACE"
 
-WORKSPACE="/Users/arman/code/"
-OFFICE_WORKSPACE="/Users/arman/code/github/midaslabs"
-
-alias office="cd $OFFICE_WORKSPACE"
-alias mybeacon="cd $WORKSPACE/github/mybeacon"
+WORKSPACE="~/code/"
 
 function protogen() {
 	protoc -I="$OFFICE_WORKSPACE/proto-repo/v1" -I="$OFFICE_WORKSPACE/ship" --go-grpc_out=$2 --go_out=$2 --ship_out=$2 --graphql_out=field_camel:$2 $1
