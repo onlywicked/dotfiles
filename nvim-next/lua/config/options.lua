@@ -15,7 +15,7 @@ opt.relativenumber = true
 opt.signcolumn = "yes"
 
 -- Keep some context visible above and below the cursor.
-opt.scrolloff = 10
+opt.scrolloff = 20
 
 -- Use spaces instead of tabs by default.
 opt.expandtab = true
