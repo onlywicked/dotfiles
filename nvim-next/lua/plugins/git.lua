@@ -8,6 +8,7 @@ return {
     event = {
       "BufReadPre",
       "BufNewFile",
+      "BufWinEnter",
     },
     opts = {
       -- Use simple ASCII signs so the gutter looks correct even without a
